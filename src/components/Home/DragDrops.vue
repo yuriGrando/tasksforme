@@ -1,10 +1,11 @@
 <template>
-    <div class="shadow p-3 bg-gray-900/80 rounded-md w-72">
-        <div class="w-full mb-3 rounded-md p-1" :class="setColorFrame(value)">
+    <div class="shadow p-3 bg-gray-900/80 rounded-md w-72 max-h-full">
+        <div class="w-full rounded-md p-1" :class="setColorFrame(value)">
             <h3 class="text-left font-semibold ml-1 text-1xl">{{ title }}</h3>
         </div>
         <draggable
-            class="list-group"
+            class="list-group max-h-96 overflow-hidden hover:overflow-auto transition-all"
+            :class="list.length <= 0 ? 'mt-3' : 'my-3'"
             :list="list"
             group="people"
             @change="log"
@@ -13,15 +14,13 @@
             <template #item="{ element, index }">
                 <card-task :task="element" />
             </template>
-            <template #footer>
-                <div class="w-full rounded-md bg-blue-900 h-9 flex items-center justify-center gap-2 cursor-pointer hover:bg-blue-800 transition-all">
-                    <PlusIcon class="h-4 w-4 mt-1" />
-                    <p class="text-sm font-light">
-                        adicionar
-                    </p>
-                </div>
-            </template>
         </draggable>
+        <div class="w-full rounded-md bg-blue-900 h-9 flex items-center justify-start gap-2 p-3 cursor-pointer hover:bg-blue-800 transition-all">
+            <PlusIcon class="h-4 w-4 mt-1" />
+            <p class="text-sm font-light">
+                adicionar
+            </p>
+        </div>
     </div>
 </template>
 

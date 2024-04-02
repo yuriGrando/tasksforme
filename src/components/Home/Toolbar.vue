@@ -1,11 +1,12 @@
 <script>
 import Logotipo from "../Logotipo.vue";
 import {ChevronDownIcon, DocumentPlusIcon, FunnelIcon, Cog6ToothIcon} from "@heroicons/vue/24/outline/index.js";
+import MenuBackground from "./MenuBackground.vue";
 
 export default {
     name: "Toolbar",
     emits: ['create-task'],
-    components: {ChevronDownIcon, FunnelIcon, DocumentPlusIcon, Cog6ToothIcon, Logotipo},
+    components: {MenuBackground, ChevronDownIcon, FunnelIcon, DocumentPlusIcon, Cog6ToothIcon, Logotipo},
     computed: {
         userName() {
             return localStorage.getItem('username');
@@ -42,9 +43,7 @@ export default {
                 <FunnelIcon class="h-4 w-4"/>
                 <span class="font-semibold">filtros</span>
             </button>
-            <button class="px-3 py-1 rounded-md transition-all hover:bg-gray-50/20">
-                <cog6-tooth-icon class="h-5 w-5" />
-            </button>
+            <menu-background />
         </div>
     </div>
 </template>

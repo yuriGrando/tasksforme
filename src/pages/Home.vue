@@ -1,7 +1,7 @@
 <template>
-    <div class="bg-gradient-to-r from-indigo-800 from-10% via-sky-800 via-30% to-emerald-500 to-90% page">
+    <div class="page" :class="background">
         <toolbar />
-        <div class="w-full p-4 flex items-start justify-center gap-4">
+        <div class="w-full p-4 flex items-start justify-center gap-4" style="height: calc(100vh - 7.5rem)">
             <drag-drops
                 v-for="frame in tasksData"
                 :title="frame.title"
@@ -52,6 +52,23 @@ export default {
                     ]
                 }
             ]
+        }
+    },
+    computed: {
+        background() {
+            switch (localStorage.getItem('background')) {
+                case 'dark':
+                    return 'bg-gray-700'
+                case 'light':
+                    return 'bg-gray-400'
+                case 'degrade1':
+                    return 'bg-gradient-to-r from-indigo-800 from-10% via-sky-800 via-30% to-emerald-500 to-90%'
+                case 'degrade2':
+                    return 'bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500'
+                default:
+                    return 'bg-gradient-to-r from-indigo-800 from-10% via-sky-800 via-30% to-emerald-500 to-90%'
+
+            }
         }
     },
     mounted() {
