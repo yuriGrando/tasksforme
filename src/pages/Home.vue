@@ -1,43 +1,97 @@
 <template>
-    <div class="bg-gray-900 page">
-        <div class="w-full h-20 bg-gray-950 flex p-4 items-center justify-between">
-            <logotipo size="sm" horizontal />
-            <div class="flex gap-4 items-center">
-                <button class="flex w-full justify-center items-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                    <document-plus-icon class="w-5 mr-1" />
-                    <span>Criar Tarefa</span>
-                </button>
-                <div class="flex gap-2 items-center cursor-pointer">
-                    <div class="h-10 w-10 bg-gray-500 rounded-full flex items-center justify-center">
-                       <span>{{ userName.substring(0,1).toUpperCase() }}</span>
-                    </div>
-                    <chevron-down-icon class="w-4" />
-                </div>
-            </div>
+    <div class="bg-gradient-to-r from-indigo-800 from-10% via-sky-800 via-30% to-emerald-500 to-90% page">
+        <toolbar />
+        <div class="w-full p-4 flex items-start justify-center gap-4">
+            <drag-drops
+                v-for="frame in tasksData"
+                :title="frame.title"
+                :value="frame.value"
+                :list="frame.tasks"
+            />
         </div>
     </div>
 </template>
 
 <script>
-import Logotipo from "../components/Logotipo.vue";
-import {DocumentPlusIcon, ChevronDownIcon} from "@heroicons/vue/24/outline/index.js";
+import Toolbar from "../components/Home/Toolbar.vue";
+import DragDrops from "../components/Home/DragDrops.vue";
+import {requests} from "../api/api.js";
 
 export default {
     name: 'Home',
-    components: {Logotipo, DocumentPlusIcon, ChevronDownIcon},
+    components: {DragDrops, Toolbar},
     data() {
-        return {}
-    },
-    computed: {
-        userName() {
-            return localStorage.getItem('username');
+        return {
+            tasksData: [
+                {
+                    title: 'Aberto',
+                    value: 'OPENED',
+                    color: 'blue',
+                    tasks: [
+                    ]
+                },
+                {
+                    title: 'Fazendo',
+                    value: 'DOING',
+                    color: 'orange',
+                    tasks: [
+                    ]
+                },
+                {
+                    title: 'Completo',
+                    value: 'COMPLETED',
+                    color: 'green',
+                    tasks: [
+                    ]
+                },
+                {
+                    title: 'Cancelado',
+                    value: 'CANCELED',
+                    color: 'red',
+                    tasks: [
+                    ]
+                }
+            ]
         }
-    }
+    },
+    mounted() {
+        this.getTasks();
+    },
+    methods: {
+        getTasks() {
+            requests.get('http://ec2-44-199-92-143.compute-1.amazonaws.com/api/tasks')
+                .then((res) => {
+                    console.log(res);
+                    this.mountTasks(res.content);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        },
+        mountTasks(tasks) {
+            tasks.forEach((task) => {
+                switch (task.status) {
+                    case "OPENED":
+                        this.tasksData[0].tasks.push(task);
+                        break
+                    case "DOING":
+                        this.tasksData[1].tasks.push(task);
+                        break
+                    case "COMPLETED":
+                        this.tasksData[2].tasks.push(task);
+                        break
+                    case "CANCELED":
+                        this.tasksData[3].tasks.push(task);
+                        break
+                }
+            })
+        }
+    },
 }
 </script>
 <style scoped>
 .page {
-    width: 100vw;
-    height: 100vh;
+    max-width: 100vw;
+    min-height: 100vh;
 }
 </style>
