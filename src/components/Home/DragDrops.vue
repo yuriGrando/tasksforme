@@ -7,16 +7,16 @@
             class="list-group max-h-96 overflow-hidden hover:overflow-auto transition-all"
             :class="list.length <= 0 ? 'mt-3' : 'mt-3 mb-1'"
             :list="list"
-            group="people"
+            group="tasks"
             @change="log"
-            itemKey="name"
+            itemKey="value"
         >
             <template #item="{ element, index }">
                 <card-task :task="element" />
             </template>
         </draggable>
         <div class="w-full">
-            <DialogCreateTask :status-create="value" />
+            <DialogCreateTask :status-create="value" @add-task="addTask" />
         </div>
     </div>
 </template>
@@ -29,14 +29,25 @@ import DialogCreateTask from "./DialogCreateTask.vue";
 export default {
     name: "DragDrops",
     components: {DialogCreateTask, CardTask, draggable, PlusIcon },
+    emits: ['add-task', 'change'],
     props: {
         title: String,
         list: Array,
         value: String,
     },
+    data() {
+        return {
+            taskList: this.list
+        }
+    },
     methods: {
         log: function(evt) {
-            window.console.log(evt);
+            if (evt.added) {
+                this.$emit('change',{
+                    task: evt.added.element,
+                    value: this.value,
+                });
+            }
         },
         setColorFrame(value) {
             switch (value) {
@@ -52,7 +63,10 @@ export default {
                 case "CANCELED":
                     return 'bg-red-600'
             }
-        }
+        },
+        addTask(task) {
+            this.$emit('add-task', task)
+        },
     }
 }
 </script>

@@ -5,11 +5,16 @@ import DialogCreateTask from "./DialogCreateTask.vue";
 
 export default {
     name: "Toolbar",
-    emits: ['create-task'],
+    emits: ['create-task', 'add-task'],
     components: {DialogCreateTask, MenuBackground, ChevronDownIcon, FunnelIcon, Cog6ToothIcon },
     computed: {
         userName() {
             return localStorage.getItem('username');
+        }
+    },
+    methods: {
+        addTask(task) {
+            this.$emit('add-task', task)
         }
     }
 }
@@ -19,7 +24,7 @@ export default {
     <div class="w-full h-20 bg-gray-950/90 flex py-4 pr-4 items-center justify-between">
         <img src="../../assets/logotipo-light.png" alt="logotipo" class="w-48"/>
         <div class="flex gap-4 items-center">
-            <dialog-create-task />
+            <dialog-create-task @add-task="addTask"/>
             <div class="flex gap-2 items-center cursor-pointer">
                 <div class="h-10 w-10 bg-gray-500 rounded-full flex items-center justify-center">
                     <span>{{ userName.substring(0,1).toUpperCase() }}</span>

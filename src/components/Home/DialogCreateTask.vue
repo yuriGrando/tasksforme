@@ -150,6 +150,7 @@ import {requests} from "../../api/api.js";
 export default {
     name: 'DialogCreateTask',
     components: {PlusIcon, TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle, DocumentPlusIcon },
+    emits: ['add-task'],
     props: {
         statusCreate: {
             type: String,
@@ -186,17 +187,16 @@ export default {
         setLabel(label) {
             const idx = this.taskData.label.indexOf(label);
             if (idx !== -1) {
-                console.log('oi', idx);
                 this.taskData.label.splice(idx, 1);
             } else {
                 this.taskData.label.push(label);
             }
-            console.log(this.taskData.label)
         },
         createTask() {
             requests.post('/tasks', this.taskData)
                 .then((res) => {
                     this.$emit('add-task', res.content);
+                    this.$notify({ type: "success", title: "Sucesso!", text: 'A tarefa foi criada com sucesso!' });
                     this.closeModal();
                 })
                 .catch((err) => {

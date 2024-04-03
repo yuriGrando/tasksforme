@@ -81,9 +81,10 @@ export default {
                     localStorage.setItem('user-id', res.data.content.userId);
                     this.loading = false;
                     this.$router.push({name: 'Home'});
+                    this.$notify({ type: "success", title: `Bem vindo, ${res.data.content.name}` });
                 })
                 .catch((err) => {
-                    alert('Erro login');
+                    this.$notify({ type: "error", title: "Usuário não encontrado" });
                     console.log(err.response);
                     this.loading = false;
                 })

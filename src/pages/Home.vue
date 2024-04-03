@@ -1,12 +1,14 @@
 <template>
     <div class="page" :class="background">
-        <toolbar />
+        <toolbar @add-task="mountTasks"/>
         <div class="w-full p-4 flex items-start justify-center gap-4" style="height: calc(100vh - 7.5rem)">
             <drag-drops
                 v-for="frame in tasksData"
                 :title="frame.title"
                 :value="frame.value"
                 :list="frame.tasks"
+                @add-task="mountTasks"
+                @change="changeTaskStatus"
             />
         </div>
     </div>
@@ -76,33 +78,46 @@ export default {
     },
     methods: {
         getTasks() {
-            requests.get('http://ec2-44-199-92-143.compute-1.amazonaws.com/api/tasks')
+            requests.get('/tasks')
                 .then((res) => {
                     console.log(res);
-                    this.mountTasks(res.content);
+                    this.breakTasks(res.content);
                 })
                 .catch((err) => {
                     console.log(err);
                 })
         },
-        mountTasks(tasks) {
+        changeTaskStatus(payload) {
+            requests.put(`/tasks/${payload.task.id}/status`, {status: payload.value})
+                .then((res) => {
+                    console.log(res);
+                })
+                .catch((err) => {
+                    console.log(err.response);
+                })
+        },
+        breakTasks(tasks) {
             tasks.forEach((task) => {
-                switch (task.status) {
-                    case "OPENED":
-                        this.tasksData[0].tasks.push(task);
-                        break
-                    case "DOING":
-                        this.tasksData[1].tasks.push(task);
-                        break
-                    case "COMPLETED":
-                        this.tasksData[2].tasks.push(task);
-                        break
-                    case "CANCELED":
-                        this.tasksData[3].tasks.push(task);
-                        break
-                }
+                this.mountTasks(task);
             })
+        },
+        mountTasks(task) {
+            switch (task.status) {
+                case "OPENED":
+                    this.tasksData[0].tasks.push(task);
+                    break
+                case "DOING":
+                    this.tasksData[1].tasks.push(task);
+                    break
+                case "COMPLETED":
+                    this.tasksData[2].tasks.push(task);
+                    break
+                case "CANCELED":
+                    this.tasksData[3].tasks.push(task);
+                    break
+            }
         }
+
     },
 }
 </script>
