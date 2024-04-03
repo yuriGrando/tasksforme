@@ -1,5 +1,5 @@
 <template>
-    <div class="mb-2 p-2.5 bg-gray-700 rounded-md shadow-2xl flex-col flex gap-1 cursor-pointer">
+    <div class="p-2.5 bg-gray-700 rounded-md shadow flex-col flex gap-1 cursor-pointer mb-2">
         <div class="flex-wrap flex gap-1">
             <span v-for="label in JSON.parse(task.label)" class="text-xs rounded-md px-1.5 bg-green-600">
                 {{ label }}

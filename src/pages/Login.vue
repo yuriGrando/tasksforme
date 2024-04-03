@@ -2,8 +2,10 @@
     <div class="page bg-gradient-to-r from-indigo-800 from-10% via-sky-800 via-30% to-emerald-500 to-90% flex items-center justify-center">
         <div class="w-96 p-6 rounded-lg flex-col items-center justify-center bg-gray-800/70 shadow-2xl">
             <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-                <Logotipo />
-                <h2 class="mt-5 text-center text-2xl font-bold leading-9 tracking-tight">Acesse a sua conta</h2>
+                <div class="w-full flex justify-center">
+                    <img src="../assets/logotipo-light.png" alt="logotipo" class="w-64"/>
+                </div>
+                <h2 class="text-center text-2xl font-bold leading-9 tracking-tight">Acesse a sua conta</h2>
             </div>
 
             <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -54,12 +56,11 @@
 
 <script>
 import {ClipboardDocumentCheckIcon} from "@heroicons/vue/24/outline/index.js";
-import Logotipo from "../components/Logotipo.vue";
 import axios from "axios";
 import {requests} from "../api/api.js";
 export default {
     name: 'Login',
-    components: {Logotipo, ClipboardDocumentCheckIcon},
+    components: {ClipboardDocumentCheckIcon},
     data() {
         return {
             loading: false,

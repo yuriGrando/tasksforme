@@ -1,12 +1,12 @@
 <script>
-import Logotipo from "../Logotipo.vue";
-import {ChevronDownIcon, DocumentPlusIcon, FunnelIcon, Cog6ToothIcon} from "@heroicons/vue/24/outline/index.js";
+import {ChevronDownIcon, FunnelIcon, Cog6ToothIcon} from "@heroicons/vue/24/outline/index.js";
 import MenuBackground from "./MenuBackground.vue";
+import DialogCreateTask from "./DialogCreateTask.vue";
 
 export default {
     name: "Toolbar",
     emits: ['create-task'],
-    components: {MenuBackground, ChevronDownIcon, FunnelIcon, DocumentPlusIcon, Cog6ToothIcon, Logotipo},
+    components: {DialogCreateTask, MenuBackground, ChevronDownIcon, FunnelIcon, Cog6ToothIcon },
     computed: {
         userName() {
             return localStorage.getItem('username');
@@ -16,16 +16,10 @@ export default {
 </script>
 
 <template>
-    <div class="w-full h-20 bg-gray-950/90 flex p-4 items-center justify-between">
-        <logotipo size="sm" horizontal />
+    <div class="w-full h-20 bg-gray-950/90 flex py-4 pr-4 items-center justify-between">
+        <img src="../../assets/logotipo-light.png" alt="logotipo" class="w-48"/>
         <div class="flex gap-4 items-center">
-            <button
-                @click="$emit('create-task')"
-                class="flex w-full justify-center items-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-                <document-plus-icon class="w-5 mr-1" />
-                <span>Criar Tarefa</span>
-            </button>
+            <dialog-create-task />
             <div class="flex gap-2 items-center cursor-pointer">
                 <div class="h-10 w-10 bg-gray-500 rounded-full flex items-center justify-center">
                     <span>{{ userName.substring(0,1).toUpperCase() }}</span>

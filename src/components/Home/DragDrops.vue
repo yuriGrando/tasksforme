@@ -5,7 +5,7 @@
         </div>
         <draggable
             class="list-group max-h-96 overflow-hidden hover:overflow-auto transition-all"
-            :class="list.length <= 0 ? 'mt-3' : 'my-3'"
+            :class="list.length <= 0 ? 'mt-3' : 'mt-3 mb-1'"
             :list="list"
             group="people"
             @change="log"
@@ -15,11 +15,8 @@
                 <card-task :task="element" />
             </template>
         </draggable>
-        <div class="w-full rounded-md bg-blue-900 h-9 flex items-center justify-start gap-2 p-3 cursor-pointer hover:bg-blue-800 transition-all">
-            <PlusIcon class="h-4 w-4 mt-1" />
-            <p class="text-sm font-light">
-                adicionar
-            </p>
+        <div class="w-full">
+            <DialogCreateTask :status-create="value" />
         </div>
     </div>
 </template>
@@ -28,9 +25,10 @@
 import draggable from "vuedraggable";
 import {PlusIcon} from '@heroicons/vue/24/outline'
 import CardTask from "./CardTask.vue";
+import DialogCreateTask from "./DialogCreateTask.vue";
 export default {
     name: "DragDrops",
-    components: {CardTask, draggable, PlusIcon },
+    components: {DialogCreateTask, CardTask, draggable, PlusIcon },
     props: {
         title: String,
         list: Array,
