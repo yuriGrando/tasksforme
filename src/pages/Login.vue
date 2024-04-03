@@ -45,9 +45,9 @@
                     </div>
                 </div>
 
-                <p class="mt-10 text-center text-sm">
+                <p class="mt-10 flex gap-1 items-center justify-center text-center text-sm">
                     Não possui uma conta?
-                    <a href="#" class="font-semibold leading-6 text-blue-300 hover:text-blue-300">Cadastre-se</a>
+                    <dialog-create-user />
                 </p>
             </div>
         </div>
@@ -58,9 +58,10 @@
 import {ClipboardDocumentCheckIcon} from "@heroicons/vue/24/outline/index.js";
 import axios from "axios";
 import {requests} from "../api/api.js";
+import DialogCreateUser from "../components/Login/DialogCreateUser.vue";
 export default {
     name: 'Login',
-    components: {ClipboardDocumentCheckIcon},
+    components: {DialogCreateUser, ClipboardDocumentCheckIcon},
     data() {
         return {
             loading: false,
@@ -81,7 +82,7 @@ export default {
                     localStorage.setItem('user-id', res.data.content.userId);
                     this.loading = false;
                     this.$router.push({name: 'Home'});
-                    this.$notify({ type: "success", title: `Bem vindo, ${res.data.content.name}` });
+                    this.$notify({ type: "success", title: `Bem vindo, ${res.data.content.name}`, text: 'É um grande prazer receber você aqui!' });
                 })
                 .catch((err) => {
                     this.$notify({ type: "error", title: "Usuário não encontrado" });

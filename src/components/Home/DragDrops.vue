@@ -1,10 +1,11 @@
 <template>
-    <div class="shadow p-3 bg-gray-900/80 rounded-md w-72 max-h-full">
+    <div class="min-w-72 shadow p-3 bg-gray-900/80 rounded-md w-72">
         <div class="w-full rounded-md p-1" :class="setColorFrame(value)">
             <h3 class="text-left font-semibold ml-1 text-1xl">{{ title }}</h3>
         </div>
         <draggable
             class="list-group max-h-96 overflow-hidden hover:overflow-auto transition-all"
+            style="max-height: calc(100vh - 17.3rem)"
             :class="list.length <= 0 ? 'mt-3' : 'mt-3 mb-1'"
             :list="list"
             group="tasks"

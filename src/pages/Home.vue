@@ -1,8 +1,9 @@
 <template>
     <div class="page" :class="background">
         <toolbar @add-task="mountTasks"/>
-        <div class="w-full p-4 flex items-start justify-center gap-4" style="height: calc(100vh - 7.5rem)">
+        <div class="overflow-auto items-start xl:justify-center p-4 gap-4 flex" style="height: calc(100vh - 7.5rem); width: 100vw">
             <drag-drops
+                disabled
                 v-for="frame in tasksData"
                 :title="frame.title"
                 :value="frame.value"
@@ -123,7 +124,7 @@ export default {
 </script>
 <style scoped>
 .page {
-    max-width: 100vw;
+    min-width: 100vw;
     min-height: 100vh;
 }
 </style>
