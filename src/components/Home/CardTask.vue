@@ -1,5 +1,5 @@
 <template>
-    <div class="p-2.5 bg-gray-700 rounded-md shadow flex-col flex gap-1 cursor-pointer mb-2">
+    <div class="p-2.5 bg-gray-700 rounded-md shadow flex-col flex gap-1 cursor-pointer mb-2" @click="$emit('open-task', task)">
         <div class="flex-wrap flex gap-1">
             <span v-for="label in JSON.parse(task.label)" class="text-xs rounded-md px-1.5" :class="setLabelColor(label)">
                 {{ label }}
@@ -17,6 +17,7 @@
 <script>
 export default {
     name: "CardTask",
+    emits: ['open-task'],
     props: {
         task: Object,
     },
@@ -48,6 +49,9 @@ export default {
                     }
                 }
             }
+        },
+        openTask() {
+            this.dialog = true;
         }
     }
 }

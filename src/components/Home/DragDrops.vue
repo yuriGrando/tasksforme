@@ -13,13 +13,14 @@
             itemKey="value"
         >
             <template #item="{ element, index }">
-                <card-task :task="element" />
+                <card-task :task="element" @open-task="openTask" />
             </template>
         </draggable>
         <div class="w-full">
             <DialogCreateTask :status-create="value" @add-task="addTask" />
         </div>
     </div>
+    <dialog-task :show-dialog="dialog" @close="dialog = false" :task="taskOpen" @change-status="changeStatus"/>
 </template>
 
 <script>
@@ -27,9 +28,10 @@ import draggable from "vuedraggable";
 import {PlusIcon} from '@heroicons/vue/24/outline'
 import CardTask from "./CardTask.vue";
 import DialogCreateTask from "./DialogCreateTask.vue";
+import DialogTask from "./DialogTask.vue";
 export default {
     name: "DragDrops",
-    components: {DialogCreateTask, CardTask, draggable, PlusIcon },
+    components: {DialogTask, DialogCreateTask, CardTask, draggable, PlusIcon },
     emits: ['add-task', 'change'],
     props: {
         title: String,
@@ -38,12 +40,24 @@ export default {
     },
     data() {
         return {
+            dialog: false,
+            taskOpen: {},
             taskList: this.list
         }
     },
     methods: {
+        openTask(payload) {
+            console.log(payload)
+            this.taskOpen = payload;
+            this.dialog = true;
+
+        },
         log: function(evt) {
             if (evt.added) {
+                this.changeStatus({
+                    task: evt.added.element,
+                    state: this.value,
+                })
                 this.$emit('change',{
                     task: evt.added.element,
                     value: this.value,
@@ -68,6 +82,12 @@ export default {
         addTask(task) {
             this.$emit('add-task', task)
         },
+        changeStatus(value) {
+            this.$emit('change',{
+                task: value.task,
+                value: value.state,
+            });
+        }
     }
 }
 </script>

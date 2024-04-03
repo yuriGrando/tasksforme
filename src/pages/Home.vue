@@ -3,7 +3,6 @@
         <toolbar @add-task="mountTasks"/>
         <div class="overflow-auto items-start xl:justify-center p-4 gap-4 flex" style="height: calc(100vh - 7.5rem); width: 100vw">
             <drag-drops
-                disabled
                 v-for="frame in tasksData"
                 :title="frame.title"
                 :value="frame.value"
@@ -81,7 +80,6 @@ export default {
         getTasks() {
             requests.get('/tasks')
                 .then((res) => {
-                    console.log(res);
                     this.breakTasks(res.content);
                 })
                 .catch((err) => {
@@ -91,7 +89,6 @@ export default {
         changeTaskStatus(payload) {
             requests.put(`/tasks/${payload.task.id}/status`, {status: payload.value})
                 .then((res) => {
-                    console.log(res);
                 })
                 .catch((err) => {
                     console.log(err.response);

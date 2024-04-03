@@ -179,7 +179,7 @@ export default {
                 priority: ['Alta', 'Média', 'Baixa', 'Urgente'],
                 category: ['Casa', 'Trabalho', 'Estudo', 'Compras', 'Feriado', 'Saúde', 'Academia'],
                 type: ['Desenvolvimento', 'Design', 'Reunião', 'Ligação', 'E-mail', 'Pesquisa', 'Leitura', 'Escrita', 'Criação', 'Revisão'],
-                others: ['Ideias', 'Insipiração', 'Referências', 'Importante', 'Pessoal', 'Profissional']
+                others: ['Ideias', 'Inspiração', 'Referências', 'Importante', 'Pessoal', 'Profissional']
             }
         }
     },
