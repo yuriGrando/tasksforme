@@ -32,7 +32,7 @@ import DialogTask from "./DialogTask.vue";
 export default {
     name: "DragDrops",
     components: {DialogTask, DialogCreateTask, CardTask, draggable, PlusIcon },
-    emits: ['add-task', 'change'],
+    emits: ['add-task', 'change', 'change-index'],
     props: {
         title: String,
         list: Array,
@@ -53,6 +53,12 @@ export default {
 
         },
         log: function(evt) {
+            if (evt.moved) {
+                this.movedTask({
+                    id: evt.moved.element.id,
+                    index: evt.moved.newIndex,
+                })
+            }
             if (evt.added) {
                 this.changeStatus({
                     task: evt.added.element,
@@ -83,10 +89,14 @@ export default {
             this.$emit('add-task', task)
         },
         changeStatus(value) {
+            console.log(value);
             this.$emit('change',{
                 task: value.task,
                 value: value.state,
             });
+        },
+        movedTask(payload) {
+            this.$emit('change-index', payload);
         }
     }
 }

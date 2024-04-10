@@ -46,15 +46,15 @@
                                 <bars3-bottom-left-icon class="h-6 w-6" />
                                 Descrição
                             </div>
-                            <DialogDescription class="font-light">
-                                {{ task.description }}
-                            </DialogDescription>
+                            <div class="text-sm">
+                                <span class="font-light">{{ task.description }}</span>
+                            </div>
                             <div class="mt-8">
                                 <div class="mt-2 flex gap-2">
-                                    <button class="rounded-md p-1 transition-all" @click="$emit('change-status', 'OPENED')" :class="task.status === 'OPENED' ? 'bg-blue-600' : 'bg-blue-600/10'">Aberto</button>
-                                    <button class="rounded-md p-1 transition-all" @click="$emit('change-status', 'DOING')" :class="task.status === 'DOING' ? 'bg-orange-600' : 'bg-orange-600/10'">Fazendo</button>
-                                    <button class="rounded-md p-1 transition-all" @click="$emit('change-status', 'COMPLETED')" :class="task.status === 'COMPLETED' ? 'bg-green-600' : 'bg-green-600/10'">Completo</button>
-                                    <button class="rounded-md p-1 transition-all" @click="$emit('change-status', 'CANCELED')" :class="task.status === 'CANCELED' ? 'bg-red-600' : 'bg-red-600/10'">Cancelado</button>
+                                    <button class="rounded-md p-1 transition-all" @click="$emit('change-status', {task: this.task, state: 'OPENED'})" :class="task.status === 'OPENED' ? 'bg-blue-600' : 'bg-blue-600/10'">Aberto</button>
+                                    <button class="rounded-md p-1 transition-all" @click="$emit('change-status', {task: this.task, state: 'DOING'})" :class="task.status === 'DOING' ? 'bg-orange-600' : 'bg-orange-600/10'">Fazendo</button>
+                                    <button class="rounded-md p-1 transition-all" @click="$emit('change-status', {task: this.task, state: 'COMPLETED'})" :class="task.status === 'COMPLETED' ? 'bg-green-600' : 'bg-green-600/10'">Completo</button>
+                                    <button class="rounded-md p-1 transition-all" @click="$emit('change-status', {task: this.task, state: 'CANCELED'})" :class="task.status === 'CANCELED' ? 'bg-red-600' : 'bg-red-600/10'">Cancelado</button>
                                 </div>
                             </div>
                         </DialogPanel>

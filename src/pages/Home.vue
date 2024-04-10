@@ -9,6 +9,7 @@
                 :list="frame.tasks"
                 @add-task="mountTasks"
                 @change="changeTaskStatus"
+                @change-index="changeTaskIndex"
             />
         </div>
     </div>
@@ -80,6 +81,7 @@ export default {
         getTasks() {
             requests.get('/tasks')
                 .then((res) => {
+                    console.log(res)
                     this.breakTasks(res.content);
                 })
                 .catch((err) => {
@@ -88,10 +90,15 @@ export default {
         },
         changeTaskStatus(payload) {
             requests.put(`/tasks/${payload.task.id}/status`, {status: payload.value})
-                .then((res) => {
-                })
                 .catch((err) => {
                     console.log(err.response);
+                })
+        },
+        changeTaskIndex(payload) {
+            console.log(payload)
+            requests.put(`/tasks/${payload.id}/${payload.index}`)
+                .catch((err) => {
+                    console.log(err);
                 })
         },
         breakTasks(tasks) {
