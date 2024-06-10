@@ -25,7 +25,7 @@
                 <div class="fixed inset-0 bg-black/25" />
             </TransitionChild>
 
-            <div class="fixed inset-0 overflow-y-auto">
+            <div class="fixed inset-0 overflow-y-auto ">
                 <div
                     class="flex min-h-full items-center justify-center p-4 text-center"
                 >
@@ -39,7 +39,7 @@
                         leave-to="opacity-0 scale-95"
                     >
                         <DialogPanel
-                            class="w-full max-w-md transform overflow-hidden rounded-2xl bg-gray-800 p-6 text-left align-middle shadow-xl transition-all"
+                            class="transform overflow-hidden rounded-2xl bg-gray-800 p-6 text-left align-middle shadow-xl transition-all"
                         >
                             <DialogTitle
                                 as="h3"
@@ -47,77 +47,29 @@
                             >
                                 Nova Tarefa
                             </DialogTitle>
-                            <div class="mt-2 flex-col flex gap-3">
-                                <div>
-                                    <label for="title" class="block text-sm font-medium leading-6">Título da tarefa</label>
-                                    <div class="mt-2">
-                                        <input v-model="taskData.title" id="title" name="title" type="text" autocomplete="title" required class="block w-full rounded-md border-0 py-1.5 shadow-sm pl-1.5 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                <div class="mt-2 flex-col flex gap-3">
+                                        <div>
+                                            <label for="title" class="block text-sm font-medium leading-6">Título da tarefa</label>
+                                            <div class="mt-2">
+                                                <input v-model="taskData.title" id="title" name="title" type="text" autocomplete="title" required class="block w-full rounded-md border-0 py-1.5 shadow-sm pl-1.5 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label for="description" class="block text-sm font-medium leading-6">Descrição da tarefa</label>
+                                            <div class="mt-2">
+                                                <textarea v-model="taskData.description"  id="description" rows="3" class="block w-full rounded-md border-0 py-1.5 shadow-sm pl-1.5 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label for="description" class="block text-sm font-medium leading-6">Status</label>
+                                            <div class="mt-2 flex gap-2">
+                                                <button class="rounded-md p-1 transition-all" @click="taskData.status = 'OPENED'" :class="taskData.status === 'OPENED' ? 'bg-blue-600' : 'bg-blue-600/10'">Aberto</button>
+                                                <button class="rounded-md p-1 transition-all" @click="taskData.status = 'DOING'" :class="taskData.status === 'DOING' ? 'bg-orange-600' : 'bg-orange-600/10'">Fazendo</button>
+                                                <button class="rounded-md p-1 transition-all" @click="taskData.status = 'COMPLETED'" :class="taskData.status === 'COMPLETED' ? 'bg-green-600' : 'bg-green-600/10'">Completo</button>
+                                                <button class="rounded-md p-1 transition-all" @click="taskData.status = 'CANCELED'" :class="taskData.status === 'CANCELED' ? 'bg-red-600' : 'bg-red-600/10'">Cancelado</button>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <label for="description" class="block text-sm font-medium leading-6">Descrição da tarefa</label>
-                                    <div class="mt-2">
-                                        <textarea v-model="taskData.description"  id="description" rows="3" class="block w-full rounded-md border-0 py-1.5 shadow-sm pl-1.5 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                                    </div>
-                                </div>
-                                <div>
-                                    <label for="description" class="block text-sm font-medium leading-6">Status</label>
-                                    <div class="mt-2 flex gap-2">
-                                        <button class="rounded-md p-1 transition-all" @click="taskData.status = 'OPENED'" :class="taskData.status === 'OPENED' ? 'bg-blue-600' : 'bg-blue-600/10'">Aberto</button>
-                                        <button class="rounded-md p-1 transition-all" @click="taskData.status = 'DOING'" :class="taskData.status === 'DOING' ? 'bg-orange-600' : 'bg-orange-600/10'">Fazendo</button>
-                                        <button class="rounded-md p-1 transition-all" @click="taskData.status = 'COMPLETED'" :class="taskData.status === 'COMPLETED' ? 'bg-green-600' : 'bg-green-600/10'">Completo</button>
-                                        <button class="rounded-md p-1 transition-all" @click="taskData.status = 'CANCELED'" :class="taskData.status === 'CANCELED' ? 'bg-red-600' : 'bg-red-600/10'">Cancelado</button>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label for="description" class="block text-sm font-medium leading-6">Label</label>
-                                    <p class="font-light text-sm mt-2 mb-1">Prioridade</p>
-                                    <div class="mt-2 flex gap-1 flex-wrap">
-                                        <button
-                                            v-for="label in labels.priority"
-                                            class="rounded-md p-1 transition-all text-xs"
-                                            :class="taskData.label.includes(label) ? 'bg-purple-600' : 'bg-gray-400'"
-                                            @click="setLabel(label)"
-                                        >
-                                            {{ label }}
-                                        </button>
-                                    </div>
-                                    <p class="font-light text-sm mt-2 mb-1">Categoria</p>
-                                    <div class="mt-2 flex gap-1 flex-wrap">
-                                        <button
-                                            v-for="label in labels.category"
-                                            class="rounded-md p-1 transition-all text-xs"
-                                            :class="taskData.label.includes(label) ? 'bg-yellow-600' : 'bg-gray-400'"
-                                            @click="setLabel(label)"
-                                        >
-                                            {{ label }}
-                                        </button>
-                                    </div>
-                                    <p class="font-light text-sm mt-2 mb-1">Tipo</p>
-                                    <div class="flex gap-1 flex-wrap">
-                                        <button
-                                            v-for="label in labels.type"
-                                            class="rounded-md p-1 transition-all text-xs"
-                                            :class="taskData.label.includes(label) ? 'bg-teal-600' : 'bg-gray-400'"
-                                            @click="setLabel(label)"
-                                        >
-                                            {{ label }}
-                                        </button>
-                                    </div>
-                                    <p class="font-light text-sm mt-2 mb-1">Outras</p>
-                                    <div class="mt-2 flex gap-1 flex-wrap">
-                                        <button
-                                            v-for="label in labels.others"
-                                            class="rounded-md p-1 transition-all text-xs"
-                                            :class="taskData.label.includes(label) ? 'bg-lime-600' : 'bg-gray-400'"
-                                            @click="setLabel(label)"
-                                        >
-                                            {{ label }}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
                             <div class="mt-6 w-full justify-end flex gap-2">
                                 <button :disabled="loading" class="px-4 py-2 hover:text-gray-400 transition-all" @click="closeModal">Cancelar</button>
                                 <button
